@@ -58,6 +58,39 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
+  // add event listener
+
+  function playSound(e) {
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`)
+    const key = document.querySelector(`.key[data-key="${e.keyCode}"]`)
+
+    // return if no audio file is matching
+    if(!audio) return;
+
+    // set audio time back to 0 when clicked, so allows for element to play with each click
+    audio.currentTime = 0;
+
+    // won't restart if all ready playing
+    audio.play();
+    key.classList.add('playing');
+  }
+  
+
+  // to handle transition, listen for the end event from each key
+    // can't just 'listen' to every element, have to select individually
+  const keys = document.querySelectorAll('.key')
+
+  function removeTransition(e) {
+    if (e.propertyName !== 'transform') return;
+
+    this.classList.remove('playing');
+  }
+
+  keys.forEach((key) => {
+    key.addEventListener('transitionend', removeTransition)
+  });
+
+  window.addEventListener('keydown', playSound);
 
 </script>
 
