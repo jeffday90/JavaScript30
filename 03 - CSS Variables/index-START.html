@@ -22,6 +22,22 @@
 
   <style>
 
+    :root {
+      --base: #ffc600;
+      --spacing: 10px;
+      --blur: 10px;
+    }
+
+    img {
+      padding: var(--spacing);
+      background: var(--base);
+      filter: blur(var(--blur));
+    }
+
+    .h1{
+      color: var(--base);
+    }
+
     /*
       misc styles, nothing to do with CSS variables
     */
@@ -45,6 +61,23 @@
   </style>
 
   <script>
+    // nodelist, but you can convert to an array to take advantage of prototype methods
+    const inputs = document.querySelectorAll('.controls input')
+
+    function handleUpdate (){
+      // data set puts anything on the attribute into a neat little object to use
+        //this.dataset
+
+
+      // if you look at the data attribute of the input, there is a sizing that correlates to px... that's what we will be manipulating
+      const suffix = this.dataset.sizing || '';
+      document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix)
+    }
+
+    inputs.forEach(input => input.addEventListener('change', handleUpdate));
+    inputs.forEach(input => input.addEventListener('mousemove', handleUpdate));
+
+
   </script>
 
 </body>
